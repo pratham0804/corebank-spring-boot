@@ -1,6 +1,6 @@
 package com.corebank.entity;
 
-import org.hibernate.Hibernate;
+// import org.hibernate.Hibernate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
