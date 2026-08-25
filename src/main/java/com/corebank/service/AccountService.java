@@ -3,6 +3,9 @@ package com.corebank.service;
 import org.springframework.stereotype.Service;
 
 import com.corebank.repository.AccountRepository;
+
+import jakarta.annotation.PostConstruct;
+
 import com.corebank.entity.Account;
 
 @Service
@@ -12,6 +15,11 @@ public class AccountService {
 
   public AccountService(AccountRepository accountRepository){
     this.accountRepository = accountRepository;
+  }
+
+  @PostConstruct
+  public void initialize(){
+    System.out.println("Account Service ready to use");
   }
 
 
