@@ -21,8 +21,8 @@ public class CustomerService {
   public void initialize(){
     System.out.println("CustomerService is ready to use");
   }
-  public void saveCustomer(Customer customer){
-    customerRepository.save(customer);
+  public Customer saveCustomer(Customer customer){
+    return customerRepository.save(customer);
   }
 
 }
