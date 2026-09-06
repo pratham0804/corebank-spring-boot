@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 
 import com.corebank.entity.Account;
 
+
 @Service
 public class AccountService {
 
@@ -23,8 +24,8 @@ public class AccountService {
   }
 
 
-  public void saveAccount(Account account){
-    accountRepository.save(account);
+  public Account saveAccount(Account account){
+    return accountRepository.save(account);
   }
 
 }
