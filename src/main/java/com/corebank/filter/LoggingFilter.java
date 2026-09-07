@@ -24,11 +24,11 @@ public class LoggingFilter implements Filter {
    @Override
    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         
-        System.out.println("Request entered , about to hit the application code");
+        System.out.println("[Filter] Request entered , about to hit the application code");
 
        chain.doFilter(request, response);
 
-       System.out.println("Reponse returned from application code");
+       System.out.println("[Filter] Response returned from application code");
    }
 
    @Override
