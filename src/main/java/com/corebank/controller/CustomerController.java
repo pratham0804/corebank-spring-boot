@@ -1,6 +1,4 @@
 package com.corebank.controller;
-
-import org.springframework.data.repository.config.CustomRepositoryImplementationDetector;
 import org.springframework.http.ResponseEntity;
 import com.corebank.entity.Customer;
 import com.corebank.service.CustomerService;

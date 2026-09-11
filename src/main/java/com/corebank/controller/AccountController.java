@@ -5,7 +5,6 @@ import com.corebank.entity.Account;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.security.auth.login.AccountNotFoundException;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
