@@ -1,11 +1,15 @@
 package com.corebank.controller;
-import org.springframework.http.ResponseEntity;
+
+import com.corebank.mapper.CustomerMapper;
+import com.corebank.DTO.CreateCustomerDto;
+import com.corebank.DTO.CustomerResponseDto;
 import com.corebank.entity.Customer;
 import com.corebank.service.CustomerService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/customers")
@@ -18,17 +22,13 @@ public class CustomerController {
     }
 
     @PostMapping("/addCustomer")
-    public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer){
-      //  Customer cus = customerService.saveCustomer(customer); // this is important , customer object we are receiving has id as null , and using it for returning in body of response entity will give u only name and email and id as null , if we want system generated id too in our response , we store the returned object and then pass it to body, not the object we are getting from request body... 
-      // imp : i tested this , but still i got correct output 
-      // Reason : save() returns the saved entity, and we should generally use that returned value rather than assuming the input reference is the object we should work with.
-
-  
-      //  customerService.saveCustomer(customer);
-      //  return ResponseEntity.status(201).body(customer);
-
-      Customer cus = customerService.saveCustomer(customer);
-      return ResponseEntity.status(201).body(cus);
+    public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody CreateCustomerDto customerDto){
+      
+      Customer cus = CustomerMapper.toCustomerEntity(customerDto);
+      Customer customerEntityResponse = customerService.saveCustomer(cus);
+      CustomerResponseDto customerResponseDto = CustomerMapper.toResponseDto(customerEntityResponse);
+      
+      return ResponseEntity.status(201).body(customerResponseDto);
     }
 
     

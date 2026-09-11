@@ -1,7 +1,10 @@
 package com.corebank.controller;
 
 import com.corebank.service.AccountService;
+import com.corebank.DTO.AccountResponseDto;
+import com.corebank.DTO.CreateAccountDto;
 import com.corebank.entity.Account;
+import com.corebank.mapper.AccountMapper;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -21,10 +24,12 @@ public class AccountController {
     }
 
     @PostMapping("/addAccount")
-    public ResponseEntity<Account> AddAccount(@RequestBody Account account){
+    public ResponseEntity<AccountResponseDto> AddAccount(@RequestBody CreateAccountDto createAccountDto){
 
-      Account acc = accountService.saveAccount(account);
-      return ResponseEntity.status(201).body(acc);
+      Account account = AccountMapper.toAccountEntity(createAccountDto);
+      Account accountResponse = accountService.saveAccount(account);
+      AccountResponseDto accountResponseDto = AccountMapper.toResponseDto(accountResponse);
+      return ResponseEntity.status(201).body(accountResponseDto);
     }
 
 
