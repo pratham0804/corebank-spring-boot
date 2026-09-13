@@ -1,11 +1,16 @@
 package com.corebank.controller;
 
+
+import java.util.List;
 import com.corebank.mapper.CustomerMapper;
 import com.corebank.DTO.CreateCustomerDto;
 import com.corebank.DTO.CustomerResponseDto;
 import com.corebank.entity.Customer;
+import com.corebank.exception.CustomerNotFound;
 import com.corebank.service.CustomerService;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,14 +26,29 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/addCustomer")
+    @PostMapping
     public ResponseEntity<CustomerResponseDto> saveCustomer(@RequestBody CreateCustomerDto customerDto){
       
       Customer cus = CustomerMapper.toCustomerEntity(customerDto);
       Customer customerEntityResponse = customerService.saveCustomer(cus);
       CustomerResponseDto customerResponseDto = CustomerMapper.toResponseDto(customerEntityResponse);
-      
+
       return ResponseEntity.status(201).body(customerResponseDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAllCustomers(){
+      List<Customer> customers = customerService.getAllCustomers();
+      return ResponseEntity.ok().body(customers);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) throws CustomerNotFound {
+       
+      return customerService.getCustomerById(id)
+      .map(customer -> ResponseEntity.ok(customer))
+      .orElseThrow(() -> new CustomerNotFound("Customer does not exist"));
+
     }
 
     

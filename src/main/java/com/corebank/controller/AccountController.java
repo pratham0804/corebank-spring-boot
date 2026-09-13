@@ -23,7 +23,7 @@ public class AccountController {
         this.accountService = accountService;
     }
 
-    @PostMapping("/addAccount")
+    @PostMapping
     public ResponseEntity<AccountResponseDto> AddAccount(@RequestBody CreateAccountDto createAccountDto){
 
       Account account = AccountMapper.toAccountEntity(createAccountDto);
