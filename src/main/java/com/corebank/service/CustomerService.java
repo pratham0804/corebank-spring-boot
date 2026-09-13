@@ -50,4 +50,19 @@ public class CustomerService {
      }
   }
 
+  public Customer UpdateCustomerById(Long id,Customer customer) throws CustomerNotFound {
+    Optional<Customer> optionalCustomer = customerRepository.findById(id);
+
+    if(optionalCustomer.isPresent()){
+      Customer customer2 = optionalCustomer.get();
+      customer2.setName(customer.getName());
+      customer2.setEmail(customer.getEmail());
+
+      return customer2;
+    }
+    else{
+      throw new CustomerNotFound("Customer not found, cannot perform update operation");
+    }
+  }
+
 }

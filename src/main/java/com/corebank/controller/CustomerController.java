@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatus;
@@ -70,5 +71,18 @@ public class CustomerController {
       }
     }
 
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCustomerById(@PathVariable Long id,@RequestBody Customer customer){
+      try {
+        Customer customer2 = customerService.UpdateCustomerById(id, customer);
+
+        return ResponseEntity.status(HttpStatus.OK).body(customer2);
+      } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+      }
+    }
+
+    
     
 }
