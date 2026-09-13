@@ -40,4 +40,14 @@ public class CustomerService {
           .orElseThrow(() -> new CustomerNotFound("Customer does not exist"));    
   }
 
+  public void DeleteCustomerById(Long id) throws CustomerNotFound {
+     Optional<Customer> optionalCustomer = customerRepository.findById(id);
+     if(optionalCustomer.isPresent()){
+      customerRepository.deleteById(id);
+     }
+     else{
+      throw new CustomerNotFound("Customer Not Found");
+     }
+  }
+
 }
