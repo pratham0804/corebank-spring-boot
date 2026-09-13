@@ -10,6 +10,7 @@ import com.corebank.repository.CustomerRepository;
 import jakarta.annotation.PostConstruct;
 
 import com.corebank.entity.Customer;
+import com.corebank.exception.CustomerNotFound;
 
 
 @Service
@@ -34,10 +35,9 @@ public class CustomerService {
      return customerRepository.findAll();
   }
 
-  public Optional<Customer> getCustomerById(Long id){
-
-    Optional<Customer> customer = customerRepository.findById(id);
-    return customer;    
+  public Customer getCustomerById(Long id) throws CustomerNotFound {
+    return customerRepository.findById(id)
+          .orElseThrow(() -> new CustomerNotFound("Customer does not exist"));    
   }
 
 }

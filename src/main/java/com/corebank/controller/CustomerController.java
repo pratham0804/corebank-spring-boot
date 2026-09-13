@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -43,12 +44,17 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerById(@PathVariable Long id) throws CustomerNotFound {
+    public ResponseEntity<?> getCustomerById(@PathVariable Long id) {
        
-      return customerService.getCustomerById(id)
-      .map(customer -> ResponseEntity.ok(customer))
-      .orElseThrow(() -> new CustomerNotFound("Customer does not exist"));
+       try {
+       Customer customer =  customerService.getCustomerById(id);
 
+       return ResponseEntity.ok(customer);
+        
+       } catch (CustomerNotFound e) {
+         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+       }
+       
     }
 
     
